@@ -1,25 +1,28 @@
-#' Bibliographic Information of the INLPO
+#' Bibliographic information of the INLPO
 #'
 #' Bibliographic information for reports, articles, maps, and theses related
 #' to scientific monitoring and research conducted by the U.S. Geological Survey (USGS),
-#' Idaho Water Science Center,
-#' \href{https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office}{Idaho National Laboratory Project Office}
-#' (INLPO).
+#' Idaho Water Science Center, Idaho National Laboratory Project Office
+#' ([INLPO](https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office)).
 #'
-#' @format An object of class \sQuote{pubs_data} that inherits behavior from the data frame class.
+#' @format An object of class 'pubs_data' that inherits behavior from the data frame class.
 #'   Each record corresponds to a bibliographical item and contains the following variables:
 #'   \describe{
-#'     \item{\code{key}}{\href{https://en.wikipedia.org/wiki/BibTeX}{BibTeX} key for the citation entry;}
-#'     \item{\code{year}}{year of publication;}
-#'     \item{\code{citation}}{bibliographic entry of class \link[utils]{bibentry};}
-#'     \item{\code{abstract}}{abstract text string;}
-#'     \item{\code{annotation}}{Knobel and others (2005) annotation text string.}
+#'     \item{`key`}{[BibTeX](https://en.wikipedia.org/wiki/BibTeX) key for the citation entry;}
+#'     \item{`year`}{year of publication;}
+#'     \item{`citation`}{bibliographic entry of class [`bibentry`][utils::bibentry];}
+#'     \item{`abstract`}{abstract text string;}
+#'     \item{`annotation`}{annotation text string (Knobel and others, 2005; Bartholomay, 2022).}
 #'   }
 #'   Row names are the BibTeX key for the citation entry.
 #'
 #' @source Many of these publications are available through the
-#'   \href{https://pubs.er.usgs.gov/}{USGS Publications Warehouse}.
+#'   [USGS Publications Warehouse](https://pubs.er.usgs.gov/).
 #'
+#' @references
+#'    Bartholomay, R.C., 2022, Historical development of the U.S. Geological Survey hydrological monitoring
+#'    and investigative programs at the Idaho National Laboratory, Idaho, 2002–2020: U.S. Geological Survey
+#'    Open-File Report 2022–1027 (DOE/ID-22256), 54 p., \doi{10.3133/ofr20221027}.
 #' @references
 #'    Knobel, L.L., Bartholomay, R.C., and Rousseau, J.P., 2005,
 #'    Historical development of the U.S. Geological Survey hydrologic monitoring and investigative programs

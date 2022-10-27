@@ -24,11 +24,10 @@ these publications is crucial to the management and use of the aquifer
 by the Idaho National Laboratory (INL) and the State of Idaho. USGS
 geohydrologic studies and monitoring, which began in 1949, were done in
 cooperation with the U.S. Department of Energy Idaho Operations Office.
-
 A word cloud highlighting the 200 most popular words used in titles and
 abstracts is shown below.
 
-![wordcloud](man/figures/wordcloud.png)
+![](man/figures/wordcloud.png)
 
 ## Installation
 
@@ -46,7 +45,7 @@ build from source, or run:
 ``` r
 if (!requireNamespace("remotes")) install.packages("remotes")
 remotes::install_gitlab(
-  repo = "inl/inlpubs",
+  repo = "inl/inlpubs@develop",
   auth_token = Sys.getenv("GITLAB_PAT"),
   host = "code.usgs.gov",
   dependencies = TRUE
@@ -106,23 +105,15 @@ Conduct](https://www.usgs.gov/office-of-science-quality-and-integrity/fundamenta
 
 ## Disclaimer
 
-This software has been approved for release by the U.S. Geological
-Survey (USGS). Although the software has been subjected to rigorous
-review, the USGS reserves the right to update the software as needed
-pursuant to further analysis and review. No warranty, expressed or
-implied, is made by the USGS or the U.S. Government as to the
-functionality of the software and related material nor shall the fact of
-release constitute any such warranty. Furthermore, the software is
-released on condition that neither the USGS nor the U.S. Government
-shall be held liable for any damages resulting from its authorized or
-unauthorized use.
-
-Although these data have been processed successfully on a computer
-system at the USGS, no warranty expressed or implied is made regarding
-the display or utility of the data for other purposes, nor on all
-computer systems, nor shall the act of distribution constitute any such
-warranty. The USGS or the U.S. Government shall not be held liable for
-improper or incorrect use of the data described and/or contained herein.
+This software is preliminary or provisional and is subject to revision.
+It is being provided to meet the need for timely best science. The
+software has not received final approval by the U.S. Geological Survey
+(USGS). No warranty, expressed or implied, is made by the USGS or the
+U.S. Government as to the functionality of the software and related
+material nor shall the fact of release constitute any such warranty. The
+software is provided on the condition that neither the USGS nor the U.S.
+Government shall be held liable for any damages resulting from the
+authorized or unauthorized use of the software.
 
 Any use of trade, product, or firm names is for descriptive purposes
 only and does not imply endorsement by the U.S. Government.
@@ -221,7 +212,7 @@ Year of version
 Version
 </th>
 <td>
-1.0.2
+1.0.3.9000
 </td>
 </tr>
 <tr>

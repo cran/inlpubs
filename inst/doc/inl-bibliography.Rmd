@@ -100,23 +100,30 @@ for (yr in seq(max(pubs$year), min(pubs$year))) {
     cat(author[i], "\n\n")
     cat("#### Suggested citation", "\n\n")
     cat(reference[i], "\n\n")
+
     cat("<details>", "\n")
     cat("<summary>BibTeX citation</summary>", "\n")
     cat("```", "\n")
     cat(bib[[i]], sep = "\n")
     cat("```", "\n")
-    cat("</details>", "\n\n")
-    cat("#### Abstract", "\n\n")
+    cat("</details>", "\n")
     x <- pubs[i, "abstract"]
     if (!is.na(x) && nzchar(x)) {
-      cat(stringi::stri_unescape_unicode(x), "\n\n")
-    } else {
-      cat("No abstract available.", "\n\n")
-      x <- pubs[i, "annotation"]
-      if (!is.na(x) && nzchar(x)) {
-        cat("#### Annotation", "\n\n")
-        cat(stringi::stri_unescape_unicode(x), "\n\n")
-      }
+      cat("<details>", "\n\n")
+      cat("<summary>Abstract</summary>", "\n")
+      cat("\n")
+      cat(stringi::stri_unescape_unicode(x), sep = "\n")
+      cat("\n")
+      cat("</details>", "\n\n")
+    }
+    x <- pubs[i, "annotation"]
+    if (!is.na(x) && nzchar(x)) {
+      cat("<details>", "\n")
+      cat("<summary>Annotation</summary>", "\n")
+      cat("\n")
+      cat(stringi::stri_unescape_unicode(x), sep = "\n")
+      cat("\n")
+      cat("</details>", "\n\n")
     }
   }
 }

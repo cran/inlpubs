@@ -89,7 +89,7 @@ for (i in seq_along(grp)) {
 }
 kableExtra::row_spec(x, row = nrow(d), italic = TRUE)
 
-## ----"graph_prod", echo=FALSE, results="asis", fig.height=3, fig.cap=sprintf("<b>Figure 1.</b> &nbsp; Distribution of INL Project Office publications (%s--%s). USGS and non-USGS publication types are distinguished by color.", min(pubs$year), max(pubs$year))----
+## ----"graph_prod", echo=FALSE, results="asis", fig.height=4, fig.cap=sprintf("<b>Figure 1.</b> &nbsp; Distribution of INL Project Office publications (%s--%s). USGS and non-USGS publication types are distinguished by color.", min(pubs$year), max(pubs$year))----
 
 tbl <- table(pubs$year)
 d1 <- data.frame(
@@ -105,19 +105,95 @@ d2 <- data.frame(
   stringsAsFactors = FALSE
 )
 d1$y2[match(d2$x, d1$x)] <- d2$y2
-ylab <- "Number of publications per year"
+ylab <- "Total number of publications per year"
 cols <- c("Non-USGS" = "#B47846", "USGS" = "#4682B4")
-inlmisc::PlotGraph(d1,
-  ylab = ylab, col = cols, fill = "tozeroy", fillcolor = cols,
-  lty = 1, center.date.labels = TRUE, seq.date.by = "year"
-)
-graphics::legend("topright", rev(names(cols)),
-  fill = rev(cols), border = NA, inset = c(0.02, 0.05),
-  cex = 0.7, box.lty = 1, box.lwd = 0.5, xpd = NA, bg = "#FFFFFFE7"
+
+npubs <- apply(d1[, -1], 1, sum, na.rm = TRUE)
+ylim <- range(pretty(0:max(npubs)))
+
+dates <- d1[, 1]
+pretty_dates <- pretty(dates)
+is <- dates %in% pretty_dates
+dates[!is] <- NA
+pretty_dates <- dates[is]
+at <- which(is)
+
+graphics::par(mar = c(2.1, 3.1, 1.1, 0.1))
+
+graphics::barplot(
+  height = t(as.matrix(d1[, -1])),
+  names.arg = dates,
+  ylab = ylab,
+  col = cols,
+  space = 0,
+  border = NA,
+  ylim = ylim,
+  yaxt = "n",
+  xaxt = "n",
+  cex.axis = 0.7,
+  cex.lab = 0.7,
+  mgp = c(2, 0.5, 0)
 )
 
+graphics::axis(
+  side = 1,
+  at = at,
+  labels = format(pretty_dates),
+  tck = 0.02,
+  lwd = 0,
+  lwd.ticks = 0.5,
+  cex.axis = 0.7,
+  mgp = c(2, 0.5, 0)
+)
+
+graphics::axis(
+  side = 2,
+  ylab = ylab,
+  las = 2,
+  tck = 0.02,
+  lwd = 0,
+  lwd.ticks = 0.5,
+  cex.axis = 0.7,
+  mgp = c(2, 0.5, 0)
+)
+
+graphics::axis(
+  side = 3,
+  at = at,
+  labels = NA,
+  tck = 0.02,
+  lwd = 0,
+  lwd.ticks = 0.5,
+  mgp = c(2, 0.5, 0)
+)
+
+graphics::axis(
+  side = 4,
+  labels = NA,
+  las = 2,
+  tck = 0.02,
+  lwd = 0,
+  lwd.ticks = 0.5,
+  mgp = c(2, 0.5, 0)
+)
+
+graphics::legend(
+  x = "topright",
+  legend = rev(names(cols)),
+  fill = rev(cols),
+  border = NA,
+  inset = c(0.02, 0.05),
+  cex = 0.7,
+  box.lty = 1,
+  box.lwd = 0.5,
+  xpd = NA,
+  bg = "#FFFFFFE7"
+)
+
+graphics:: box(lwd = 0.5)
+
 ## ----"tm_data", echo=FALSE, results="asis"------------------------------------
-m <- MineText(pubs, lowfreq = 3L)
+m <- mine_text(pubs, lowfreq = 3L)
 tm_dat <- data.frame("term" = rownames(m), "count" = rowSums(m), "support" = rowSums(m > 0))
 top_word <- stringi::stri_trans_totitle(tm_dat[1, "term"])
 top_count <- format(tm_dat[1, "count"], big.mark = ",")

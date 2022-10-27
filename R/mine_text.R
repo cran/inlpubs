@@ -1,20 +1,19 @@
-#' Mine Text Components in the INLPO Publications
+#' Mine text components in the INLPO publications
 #'
-#' Performs a word frequency text analysis of
-#' \href{https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office}{Idaho National Laboratory Project Office}
-#' (INLPO) publications.
+#' Performs a word frequency text analysis of Idaho National Laboratory Project Office
+#' ([INLPO](https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office))
+#' publications.
 #'
 #' @param pubs pubs_data class.
-#'   Bibliographic information, see \code{\link{pubs}} dataset for details.
+#'   Bibliographic information, see [`pubs`] dataset for details.
 #' @param components character vector.
 #'   One or more text components to analyze.
-#'   Choices include the \code{"title"}, \code{"abstract"}, \code{"annotation"},
-#'   and \code{"citation"} of the document.
+#'   Choices include the `"title"`, `"abstract"`, `"annotation"`, and `"citation"` of the document.
 #' @param ngmin,ngmax integer number.
-#'   Splits strings into \emph{n-grams} with given minimal and maximal numbers of grams.
+#'   Splits strings into *n-grams* with given minimal and maximal numbers of grams.
 #'   An n-gram is an ordered sequence of n words taken from the body of a text.
 #'   Requires that the \pkg{RWeka} package is available and that the
-#'   environment variable \code{JAVA_HOME} points to where the Java software is located.
+#'   environment variable `JAVA_HOME` points to where the Java software is located.
 #'   Recommended for single text compoents only.
 #' @param lowfreq integer number.
 #'   Lower frequency bound.
@@ -24,27 +23,28 @@
 #'
 #' @return A word frequency table giving the number of times each word occurs in a publication's text component(s).
 #'   A table column represents a single publication that is identified using its citation-key.
-#'   And each row provides frequency counts for a particular word (also known as a \sQuote{term}).
+#'   And each row provides frequency counts for a particular word (also known as a 'term').
 #'
 #' @author J.C. Fisher, U.S. Geological Survey, Idaho Water Science Center
 #'
 #' @seealso
-#'   \code{inlmisc::\link[inlmisc]{MakeWordCloud}} function to create a word cloud.
-#'
-#' @keywords utilities
+#'   [`make_word_cloud`] function to create a word cloud.
 #'
 #' @export
 #'
 #' @examples
-#' m <- MineText(head(pubs, 3))
+#' m <- mine_text(head(pubs, 3))
 #' head(m)
 #' \dontrun{
 #' d <- data.frame(word = rownames(m), freq = rowSums(m))
-#' inlmisc::MakeWordCloud(d, display = TRUE)
+#' make_word_cloud(d, display = TRUE)
 #' }
 #'
-MineText <- function(pubs, components = c("title", "abstract"),
-                     ngmin = 1L, ngmax = ngmin, lowfreq = 1L) {
+mine_text <- function(pubs,
+                      components = c("title", "abstract"),
+                      ngmin = 1L,
+                      ngmax = ngmin,
+                      lowfreq = 1L) {
 
   # check arguments
   checkmate::assertClass(pubs, c("pubs_data", "data.frame"))
@@ -77,19 +77,19 @@ MineText <- function(pubs, components = c("title", "abstract"),
   corpora <- tm::VCorpus(tm::VectorSource(texts))
 
   # apply transformation functions to corpora
-  RmURL <- tm::content_transformer(function(x) {
+  remove_url <- tm::content_transformer(function(x) {
     gsub("(f|ht)tp(s?)://\\S+", "", x, perl = TRUE)
   })
-  corpora <- tm::tm_map(corpora, RmURL)
-  RmPat <- tm::content_transformer(function(x, pattern) {
+  corpora <- tm::tm_map(corpora, remove_url)
+  remove_pat <- tm::content_transformer(function(x, pattern) {
     gsub(pattern, " ", x)
   })
-  corpora <- tm::tm_map(corpora, RmPat, "\\\\u[0-9A-Fa-f]{4}")
-  corpora <- tm::tm_map(corpora, RmPat, "\\\\n")
-  corpora <- tm::tm_map(corpora, RmPat, "<.*?>")
-  corpora <- tm::tm_map(corpora, RmPat, "/")
-  corpora <- tm::tm_map(corpora, RmPat, "@")
-  corpora <- tm::tm_map(corpora, RmPat, "\\|")
+  corpora <- tm::tm_map(corpora, remove_pat, "\\\\u[0-9A-Fa-f]{4}")
+  corpora <- tm::tm_map(corpora, remove_pat, "\\\\n")
+  corpora <- tm::tm_map(corpora, remove_pat, "<.*?>")
+  corpora <- tm::tm_map(corpora, remove_pat, "/")
+  corpora <- tm::tm_map(corpora, remove_pat, "@")
+  corpora <- tm::tm_map(corpora, remove_pat, "\\|")
   corpora <- tm::tm_map(corpora, tm::content_transformer(tolower))
   corpora <- tm::tm_map(corpora, tm::removeNumbers)
   corpora <- tm::tm_map(corpora, tm::removeWords, tm::stopwords("english"))
@@ -98,7 +98,9 @@ MineText <- function(pubs, components = c("title", "abstract"),
   corpora <- tm::tm_map(corpora, tm::stripWhitespace)
 
   # identify with citation key
-  for (i in seq_along(corpora)) corpora[[i]]$meta$id <- pubs$key[i]
+  for (i in seq_along(corpora)) {
+    corpora[[i]]$meta$id <- pubs$key[i]
+  }
 
   # define n-gram tokenizer
   if (ngmin > 1L || ngmax > 1L) {
