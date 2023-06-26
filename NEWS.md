@@ -1,3 +1,10 @@
+# inlpubs 1.0.5
+
+- Add additional citations
+- Switch Git repository name from `master` to `main`.
+- Bump R version requirement from `4.0` to `4.1`.
+- Add all branches to `code.json` file.
+
 # inlpubs 1.0.4
 
 - Add additional citations

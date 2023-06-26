@@ -1,24 +1,26 @@
-# inlpubs
+inlpubs
+=======
 
 [![USGS
 Category](https://img.shields.io/badge/USGS-Research-blue.svg)](https://owi.usgs.gov/R/packages.html#research)
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/inlpubs)](https://CRAN.R-project.org/package=inlpubs)
 [![pipeline
-status](https://code.usgs.gov/inl/inlpubs/badges/master/pipeline.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/master)
+status](https://code.usgs.gov/inl/inlpubs/badges/main/pipeline.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/main)
 [![coverage
-report](https://code.usgs.gov/inl/inlpubs/badges/master/coverage.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/master)
+report](https://code.usgs.gov/inl/inlpubs/badges/main/coverage.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/main)
 
-## Description
+Description
+-----------
 
 The [R](https://www.r-project.org/) package **inlpubs** may be used to
-search and analyze 366 publications that cover the 74-year history of
-the U.S. Geological Survey (USGS), Idaho Water Science Center, [Idaho
-National Laboratory Project
-Office](https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office)
-(INLPO). The INLPO publications were authored by 253 researchers trying
-to better understand the effects of waste disposal on water contained in
-the eastern Snake River Plain aquifer and the availability of water for
+search and analyze 378 publications that cover the 75-year history of
+the U.S. Geological Survey (USGS), Idaho Water Science Center, Idaho
+National Laboratory Project Office
+([INLPO](https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office)).
+The INLPO publications were authored by 262 researchers trying to better
+understand the effects of waste disposal on water contained in the
+eastern Snake River Plain aquifer and the availability of water for
 long-term consumptive and industrial use. Information contained within
 these publications is crucial to the management and use of the aquifer
 by the Idaho National Laboratory (INL) and the State of Idaho. USGS
@@ -29,7 +31,8 @@ abstracts is shown below.
 
 ![](man/figures/wordcloud.png)
 
-## Installation
+Installation
+------------
 
 The current release is available on
 [CRAN](https://CRAN.R-project.org/package=inlpubs), which you can
@@ -52,7 +55,8 @@ remotes::install_gitlab(
 )
 ```
 
-## Usage
+Usage
+-----
 
 Examples are given in the package help pages. To access these documents,
 run:
@@ -69,25 +73,30 @@ command:
 browseVignettes("inlpubs")
 ```
 
-## Author
+Author
+------
 
 Jason C. Fisher (ORCID iD
 [0000-0001-9032-8912](https://orcid.org/0000-0001-9032-8912))
 
-## Point of Contact
+Point of Contact
+----------------
 
-Jason C. Fisher (<jfisher@usgs.gov>)
+Jason C. Fisher
+(<a href="mailto:jfisher@usgs.gov" class="email">jfisher@usgs.gov</a>)
 
-## Suggested Citation
+Suggested Citation
+------------------
 
 To cite **inlpubs** in publications, please use:
 
 Fisher, J.C., 2022, inlpubs—Bibliographic information for the U.S.
 Geological Survey Idaho National Laboratory Project Office: U.S.
 Geological Survey software release, R package, Reston, Va.,
-<https://doi.org/10.5066/P9I3GWWU>.
+<a href="https://doi.org/10.5066/P9I3GWWU" class="uri">https://doi.org/10.5066/P9I3GWWU</a>.
 
-## Contributing
+Contributing
+------------
 
 We welcome your contributions and suggestions for how to make these
 materials more useful to the community. Please feel free to comment on
@@ -95,7 +104,8 @@ the [issue tracker](https://code.usgs.gov/inl/inlpubs/-/issues) or open
 a [merge request](https://code.usgs.gov/inl/inlpubs/-/merge_requests) to
 contribute.
 
-## Code of Conduct
+Code of Conduct
+---------------
 
 All contributions to- and interactions surrounding- this project will
 abide by the [USGS Code of Scientific
@@ -103,7 +113,8 @@ Conduct](https://www.usgs.gov/office-of-science-quality-and-integrity/fundamenta
 
 <!-- Embedded References -->
 
-## Disclaimer
+Disclaimer
+----------
 
 This software is preliminary or provisional and is subject to revision.
 It is being provided to meet the need for timely best science. The
@@ -118,7 +129,8 @@ authorized or unauthorized use of the software.
 Any use of trade, product, or firm names is for descriptive purposes
 only and does not imply endorsement by the U.S. Government.
 
-## License
+License
+-------
 
 Unless otherwise noted, this project is in the public domain in the
 United States because it contains materials that originally came from
@@ -159,15 +171,16 @@ the author or the affirmer.
 
 <!-- Embedded References -->
 
-## Support
+Support
+-------
 
-The Idaho National Laboratory Project Office of the USGS supports the
-development and maintenance of **inlpubs**. Resources are available
-primarily for maintenance and responding to user questions. Priorities
-on the development of new features are determined by the development
-team.
+The INLPO of the USGS supports the development and maintenance of
+**inlpubs**. Resources are available primarily for maintenance and
+responding to user questions. Priorities on the development of new
+features are determined by the development team.
 
-## Additional Publication Details
+Additional Publication Details
+------------------------------
 
 Additional metadata about this publication, not found in other parts of
 the page is in this table.
@@ -212,7 +225,7 @@ Year of version
 Version
 </th>
 <td>
-1.0.3.9000
+1.0.0
 </td>
 </tr>
 <tr>

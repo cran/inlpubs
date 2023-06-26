@@ -46,7 +46,8 @@ make_word_cloud <- function(x,
                             max_words = 200L,
                             size = 1,
                             shape = "circle",
-                            ellipticity = 0.65, ...,
+                            ellipticity = 0.65,
+                            ...,
                             width = 910L,
                             output = NULL,
                             display = FALSE) {
@@ -61,11 +62,11 @@ make_word_cloud <- function(x,
     "webshot2",
     "wordcloud2"
   )
-  is_missing <- !vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)
-  if (any(is_missing)) {
+  is <- !vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)
+  if (any(is)) {
     stop(
       "A word cloud requires the following missing package(s): ",
-      paste(sQuote(pkgs[is_missing]), collapse = ", "),
+      paste(sQuote(pkgs[is]), collapse = ", "),
       call. = FALSE
     )
   }
@@ -93,7 +94,7 @@ make_word_cloud <- function(x,
   )
   checkmate::assert_number(ellipticity, lower = 0, upper = 1, finite = TRUE)
   checkmate::assert_count(width, positive = TRUE)
-  checkmate::assertFlag(display)
+  checkmate::assert_flag(display)
   if (is.null(output)) {
     output <- tempfile(fileext = ".png")
   }

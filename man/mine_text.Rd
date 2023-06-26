@@ -23,7 +23,7 @@ Choices include the \code{"title"}, \code{"abstract"}, \code{"annotation"}, and 
 \item{ngmin, ngmax}{integer number.
 Splits strings into \emph{n-grams} with given minimal and maximal numbers of grams.
 An n-gram is an ordered sequence of n words taken from the body of a text.
-Requires that the \pkg{RWeka} package is available and that the
+Requires the \pkg{RWeka} package is available and that the
 environment variable \code{JAVA_HOME} points to where the Java software is located.
 Recommended for single text compoents only.}
 
@@ -45,7 +45,7 @@ publications.
 HTML entities are decoded when the \pkg{textutils} package is available.
 }
 \examples{
-m <- mine_text(head(pubs, 3))
+m <- head(pubs, 3) |> mine_text()
 head(m)
 \dontrun{
 d <- data.frame(word = rownames(m), freq = rowSums(m))

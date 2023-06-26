@@ -41,25 +41,32 @@ key <- "FisherOthers2012"
 ref <- pubs[key, "citation"]
 print(ref, style = "citation", bibtex = TRUE)
 format(ref$author, c("given", "family"))
-txt <- pubs[key, "abstract"]
-cat(strwrap(txt), sep = "\n")
+pubs[key, "abstract"] |> strwrap() |> cat(sep = "\n")
 
 ## Print list of authors:
 authors <- do.call("c", pubs$citation$author)
 authors <- authors[!duplicated(authors)]
-cat(format(authors[1:10]), sep = "\n")
+authors[1:10] |> format() |> cat(sep = "\n")
 
-\dontrun{
 ## Export suggested citations from the bibliography:
-txt <- sort(vapply(pubs$citation, function(x) {
-  attr(unclass(x)[[1]], "textVersion")
-}, character(1)))
-txt <- head(c(rbind(txt, character(length(txt)))), -1)
-txt <- strwrap(txt, width = 80, exdent = 2)
+txt <- vapply(pubs$citation, function(x) {
+  attr(unclass(x)[[1]], which = "textVersion")
+}, character(1))
+txt <- sort(txt) |>
+  rbind(character(nrow(pubs))) |>
+  c() |>
+  head(n = -1L) |>
+  strwrap(width = 80, exdent = 2)
 file <- tempfile(fileext = ".txt")
 writeLines(txt, file)
-file.show(file, title = "Suggested citations")
+if (interactive()) {
+  file.show(file,
+    title = "Suggested citations",
+    encoding = "UTF-8"
+  )
 }
+
+unlink(file)
 }
 \references{
 Bartholomay, R.C., 2022, Historical development of the U.S. Geological Survey hydrological monitoring
