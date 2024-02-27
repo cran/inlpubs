@@ -2,7 +2,7 @@
 % Please edit documentation in R/mine_text.R
 \name{mine_text}
 \alias{mine_text}
-\title{Mine text components in the INLPO publications}
+\title{Mine Text Components in the INLPO Publications}
 \usage{
 mine_text(
   pubs,
@@ -13,18 +13,18 @@ mine_text(
 )
 }
 \arguments{
-\item{pubs}{pubs_data class.
+\item{pubs}{'pub' class.
 Bibliographic information, see \code{\link{pubs}} dataset for details.}
 
 \item{components}{character vector.
 One or more text components to analyze.
-Choices include the \code{"title"}, \code{"abstract"}, \code{"annotation"}, and \code{"citation"} of the document.}
+Choices include the "title", "abstract", "annotation", and "bibentry" of the document.}
 
 \item{ngmin, ngmax}{integer number.
 Splits strings into \emph{n-grams} with given minimal and maximal numbers of grams.
 An n-gram is an ordered sequence of n words taken from the body of a text.
 Requires the \pkg{RWeka} package is available and that the
-environment variable \code{JAVA_HOME} points to where the Java software is located.
+environment variable JAVA_HOME points to where the Java software is located.
 Recommended for single text compoents only.}
 
 \item{lowfreq}{integer number.
@@ -33,7 +33,7 @@ Words that occur less than this bound are excluded from the returned frequency t
 }
 \value{
 A word frequency table giving the number of times each word occurs in a publication's text component(s).
-A table column represents a single publication that is identified using its citation-key.
+A table column represents a single publication that is identified using its bibentry-key.
 And each row provides frequency counts for a particular word (also known as a 'term').
 }
 \description{
@@ -47,14 +47,15 @@ HTML entities are decoded when the \pkg{textutils} package is available.
 \examples{
 m <- head(pubs, 3) |> mine_text()
 head(m)
-\dontrun{
-d <- data.frame(word = rownames(m), freq = rowSums(m))
-make_word_cloud(d, display = TRUE)
-}
 
+\dontrun{
+  d <- data.frame(word = rownames(m), freq = rowSums(m))
+  file <- make_wordcloud(d, display = interactive())
+  unlink(file)
+}
 }
 \seealso{
-\code{\link{make_word_cloud}} function to create a word cloud.
+\code{\link{make_wordcloud}} function to create a word cloud.
 }
 \author{
 J.C. Fisher, U.S. Geological Survey, Idaho Water Science Center

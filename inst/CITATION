@@ -1,16 +1,29 @@
-utils::citHeader(sprintf("To cite %s in publications, please use:", meta[["Package"]]))
+utils::citHeader("To cite package 'inlpubs' in publications use:")
+
+authors <- c(
+  utils::person(
+    given = c("Jason", "C."),
+    family = "Fisher"
+  ),
+  utils::person(
+    given = c("Kerri", "C."),
+    family = "Treinen"
+  ),
+  utils::person(
+    given = c("Allison", "R."),
+    family = "Trcka"
+  )
+)
 
 utils::citEntry(
   entry = "TechReport",
+  author = authors,
   title = "inlpubs---Bibliographic information for the U.S. Geological Survey Idaho National Laboratory Project Office",
-  author = eval(parse(text = meta[["Authors@R"]])),
-  institution = "U.S. Geological Survey",
-  type = "Software Release",
-  year = "2022",
-  note = sprintf("R package version %s", meta[["Version"]]),
   address = "Reston, Va.",
+  institution = "U.S. Geological Survey",
+  year = "2022",
+  note = "R package",
+  version = "1.0.0",
   doi = "10.5066/P9I3GWWU",
-  url = "https://doi.org/10.5066/P9I3GWWU",
-  key = "inlpubs-package",
   textVersion = "Fisher, J.C., 2022, inlpubs---Bibliographic information for the U.S. Geological Survey Idaho National Laboratory Project Office: U.S. Geological Survey software release, R package, Reston, Va., https://doi.org/10.5066/P9I3GWWU."
 )

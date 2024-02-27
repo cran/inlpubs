@@ -1,49 +1,44 @@
-inlpubs
-=======
+inlpubs <img src="man/figures/logo.svg" alt="inlpubs" align="right" width="152px" />
+====================================================================================
 
-[![USGS
-Category](https://img.shields.io/badge/USGS-Research-blue.svg)](https://owi.usgs.gov/R/packages.html#research)
-[![CRAN
-Version](https://www.r-pkg.org/badges/version/inlpubs)](https://CRAN.R-project.org/package=inlpubs)
-[![pipeline
-status](https://code.usgs.gov/inl/inlpubs/badges/main/pipeline.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/main)
-[![coverage
-report](https://code.usgs.gov/inl/inlpubs/badges/main/coverage.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/main)
+[![cran-version-image](https://www.r-pkg.org/badges/version/inlpubs)](https://CRAN.R-project.org/package=inlpubs)
+[![pipeline-status-image](https://code.usgs.gov/inl/inlpubs/badges/main/pipeline.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/main)
+[![coverage-status-image](https://code.usgs.gov/inl/inlpubs/badges/main/coverage.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/main)
 
 Description
 -----------
 
 The [R](https://www.r-project.org/) package **inlpubs** may be used to
-search and analyze 378 publications that cover the 75-year history of
-the U.S. Geological Survey (USGS), Idaho Water Science Center, Idaho
-National Laboratory Project Office
+search and analyze the 385 publications that cover the 76-year history
+of the U.S. Geological Survey ([USGS](https://www.usgs.gov/)), Idaho
+Water Science Center, Idaho National Laboratory Project Office
 ([INLPO](https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office)).
-The INLPO publications were authored by 262 researchers trying to better
+The INLPO publications were authored by 263 researchers trying to better
 understand the effects of waste disposal on water contained in the
 eastern Snake River Plain aquifer and the availability of water for
 long-term consumptive and industrial use. Information contained within
 these publications is crucial to the management and use of the aquifer
-by the Idaho National Laboratory (INL) and the State of Idaho. USGS
-geohydrologic studies and monitoring, which began in 1949, were done in
-cooperation with the U.S. Department of Energy Idaho Operations Office.
-A word cloud highlighting the 200 most popular words used in titles and
-abstracts is shown below.
+by the Idaho National Laboratory ([INL](https://inl.gov/)) and the State
+of Idaho. USGS geohydrologic studies and monitoring, which began in
+1920, were done in cooperation with the U.S. Department of Energy Idaho
+Operations Office. A word cloud highlighting the 200 most popular words
+used in titles and abstracts is shown below.
 
 ![](man/figures/wordcloud.png)
 
 Installation
 ------------
 
-The current release is available on
-[CRAN](https://CRAN.R-project.org/package=inlpubs), which you can
-install using the following command:
+To install the current release of the package from
+[CRAN](https://CRAN.R-project.org/package=inlpubs), you can use the
+following command in R:
 
 ``` r
 install.packages("inlpubs")
 ```
 
-To install the development version, you need to clone the repository and
-build from source, or run:
+To install the development version of the package, you need to clone the
+repository and build from source, or run the following commands:
 
 ``` r
 if (!requireNamespace("remotes")) install.packages("remotes")
@@ -66,18 +61,15 @@ library("inlpubs")
 help(package = "inlpubs")
 ```
 
-Package vignettes may be viwed through your web browser using the
-command:
+Authors
+-------
 
-``` r
-browseVignettes("inlpubs")
-```
-
-Author
-------
-
-Jason C. Fisher (ORCID iD
-[0000-0001-9032-8912](https://orcid.org/0000-0001-9032-8912))
+-   Jason C. Fisher (ORCID iD
+    [0000-0001-9032-8912](https://orcid.org/0000-0001-9032-8912))
+-   Kerri C. Treinen (ORCID iD
+    [0000-0003-0645-6810](https://orcid.org/0000-0003-0645-6810))
+-   Allison R. Trcka (ORCID iD
+    [0000-0001-8498-4737](https://orcid.org/0000-0001-8498-4737))
 
 Point of Contact
 ----------------
@@ -98,10 +90,11 @@ Geological Survey software release, R package, Reston, Va.,
 Contributing
 ------------
 
-We welcome your contributions and suggestions for how to make these
-materials more useful to the community. Please feel free to comment on
-the [issue tracker](https://code.usgs.gov/inl/inlpubs/-/issues) or open
-a [merge request](https://code.usgs.gov/inl/inlpubs/-/merge_requests) to
+We value your contributions and suggestions on how to make these
+materials more useful to the community. Please feel free to share your
+thoughts by commenting on the [issue
+tracker](https://code.usgs.gov/inl/inlpubs/-/issues) or opening a [merge
+request](https://code.usgs.gov/inl/inlpubs/-/merge_requests) to
 contribute.
 
 Code of Conduct
@@ -174,16 +167,17 @@ the author or the affirmer.
 Support
 -------
 
-The INLPO of the USGS supports the development and maintenance of
-**inlpubs**. Resources are available primarily for maintenance and
-responding to user questions. Priorities on the development of new
-features are determined by the development team.
+The Idaho National Laboratory Project Office of the USGS supports the
+development and maintenance of **inlpubs**. Resources are available
+primarily for maintenance and responding to user questions, and the
+development team determines the priorities for the development of new
+features.
 
 Additional Publication Details
 ------------------------------
 
-Additional metadata about this publication, not found in other parts of
-the page is in this table.
+This table contains additional metadata about this publication that is
+not found in other parts of the page.
 
 <!--html_preserve-->
 <table>
@@ -207,14 +201,6 @@ DOI
 <tr>
 <th scope="row">
 Year published
-</th>
-<td>
-2022
-</td>
-</tr>
-<tr>
-<th scope="row">
-Year of version
 </th>
 <td>
 2022
