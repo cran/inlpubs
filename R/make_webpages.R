@@ -81,19 +81,25 @@ make_author_webpages <- function(authors, pubs, destdir, quiet) {
   )
 
   # get icons
-  orcid_img <- "<img alt='ORCID logo' src='orcid_16x16.png' width='16' height='16' />"
-  email_img <- "<img alt='Email logo' src='email_16x16.png' width='16' height='16' />"
   icons <- vapply(authors$person,
     FUN = function(x) {
       orcid <- x$comment["ORCID"]
       if (!is.null(orcid)) {
         href <- paste0("https://orcid.org/", orcid)
-        orcid <- sprintf("<a href='%s'>%s&nbsp;%s</a>", href, orcid_img, orcid)
+        title <- "Open the author&#8217;s ORCID record in a new browser tab."
+        img <- "<img alt='ORCID logo' src='orcid.svg' width='16' height='16' />"
+        orcid <- sprintf("<a href='%s' title='%s' target='_blank'>%s&nbsp;%s</a>",
+          href, title, img, orcid
+        )
       }
       email <- x$email
       if (!is.null(email)) {
         href <- paste("mailto:", email)
-        email <- sprintf("<a href='%s'>%s&nbsp;%s</a>", href, email_img, email)
+        title <- "Contact the author"
+        img <- "<img alt='Email logo' src='email.svg' width='16' height='16' />"
+        email <- sprintf("<a href='%s' title='%s'>%s&nbsp;%s</a>",
+          href, title, img, email
+        )
       }
       sprintf("<span>%s</span>",
         paste(c(orcid, email), collapse = "&nbsp;&nbsp;&nbsp;&nbsp;")
@@ -107,9 +113,7 @@ make_author_webpages <- function(authors, pubs, destdir, quiet) {
     "total_pub" = "Total publications",
     "single_authored" = "Single authored",
     "multi_authored" = "Multi authored",
-    "first_authored" = "First authored",
-    "first_year" = "First year",
-    "last_year" = "Last year"
+    "first_authored" = "First authored"
   )
   counts <- apply(authors,
     MARGIN = 1,
@@ -118,10 +122,7 @@ make_author_webpages <- function(authors, pubs, destdir, quiet) {
       x$pub_id <- NULL
       d <- data.frame(x)[, names(row_names)] |> t()
       rownames(d) <- row_names
-      knitr::kable(d,
-        format = "html",
-        align = "r"
-      ) |>
+      knitr::kable(d, format = "html", align = "r") |>
         kableExtra::kable_styling(
           bootstrap_options = c("row-border", "condensed"),
           full_width = FALSE,
@@ -197,31 +198,30 @@ make_pub_webpages <- function(pubs, destdir, quiet) {
   names(refs) <- pubs$pub_id
 
   # make yaml headers
-  headers <- vapply(refs,
-    FUN = function(x) {
-      title <- sprintf("title: \"%s\"", x)
+  headers <- vapply(seq_along(refs),
+    FUN = function(i) {
+      href <- paste0("https://doi.org/", pubs$bibentry[i]$doi)
+      title <- "Launch the external DOI link, which leads to the publication content, in a separate browser tab."
+      img <- "<img alt='DOI link' align='right' src='doi.svg' width='20' height='20' />"
+      doi <- sprintf("<a href='%s' title='%s' target='_blank'>%s</a>", href, title, img)
+      title <- sprintf("title: \"%s%s\"", refs[i], doi)
       paste("---", title, "---", sep = "\n")
     },
     FUN.VALUE = character(1)
   )
 
-  # make buttons
-  buttons <- vapply(pubs$bibentry,
+  # make covers
+  covers <- vapply(pubs$pub_id,
     FUN = function(x) {
-      if (is.null(x$doi)) {
-        style <- "btn-danger"
-        text <- "DOI Not Available"
-        href <- "https://www.doi.org/"
+      file <- sprintf("vignettes/pub-%s.jpg", x)
+      if (checkmate::test_file_exists(file, access = "r")) {
+        sprintf(
+          "<img class='cover-image' src='%s' alt='Cover image' align='right' width='300px' />",
+          basename(file)
+        )
       } else {
-        style <- "btn-primary"
-        text <- paste("DOI", x$doi)
-        href <- paste0("https://doi.org/", x$doi)
+        character(1)
       }
-      onclick <- sprintf("window.open(\"%s\", \"_blank\");", href)
-      sprintf(
-        "<p><button onclick='%s' type='button' class='btn %s btn-xs'>%s</button></p>",
-        onclick, style, text
-      )
     },
     FUN.VALUE = character(1)
   )
@@ -264,11 +264,11 @@ make_pub_webpages <- function(pubs, destdir, quiet) {
     FUN = function(bib) {
       bibtex <- utils::toBibtex(bib) |> paste(collapse = "\n")
       paste(
-        "<a href='#bibtex' class='btn btn-default btn-xs' data-toggle='collapse'>BibTeX</a>",
+        "<a href='#bibtex' class='btn btn-default btn-xs' data-toggle='collapse' title='%s'>BibTeX</a>",
         "<div id='bibtex' class='collapse'><pre><code>%s</pre></code></div>",
         sep = "\n"
       ) |>
-        sprintf(bibtex)
+        sprintf("Switch between displaying and hiding the BibTeX citation.", bibtex)
     },
     FUN.VALUE = character(1)
   )
@@ -301,8 +301,7 @@ make_pub_webpages <- function(pubs, destdir, quiet) {
 
     # write file content
     cat(headers[i], "", sep = "\n")
-    cat(buttons[i], "", sep = "\n")
-    cat("## Title", "", titles[i], "", sep = "\n")
+    cat(paste("## Title", covers[i]), "", titles[i], "", sep = "\n")
     cat("## Authors", "", authors[i], "", sep = "\n")
     cat("## Citation", "", citations[i], "", sep = "\n")
     cat(bibtexs[i], "", sep = "\n")
@@ -318,7 +317,7 @@ make_pub_webpages <- function(pubs, destdir, quiet) {
   }
 
   # copy temporary files to destination directory
-  list.files(path = destdir, pattern = "^pub-", full.names = TRUE) |> unlink()
+  list.files(path = destdir, pattern = "^pub-*(.+).Rmd$", full.names = TRUE) |> unlink()
   file.copy(from = files, to = destdir) |> invisible()
 
   # delete temporary files

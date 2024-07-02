@@ -49,4 +49,11 @@ function filterMinValue(rows, columnId, filterValue) {
   });
 }
 
+// Filter method that filters numeric columns by maximum value
+function filterMaxValue(rows, columnId, filterValue) {
+  return rows.filter(function (row) {
+    return row.values[columnId] <= filterValue;
+  });
+}
+
 ```

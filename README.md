@@ -1,12 +1,10 @@
-inlpubs <img src="man/figures/logo.svg" alt="inlpubs" align="right" width="152px" />
-====================================================================================
+# inlpubs <img src="man/figures/logo.svg" alt="inlpubs" align="right" width="152px" />
 
 [![cran-version-image](https://www.r-pkg.org/badges/version/inlpubs)](https://CRAN.R-project.org/package=inlpubs)
 [![pipeline-status-image](https://code.usgs.gov/inl/inlpubs/badges/main/pipeline.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/main)
 [![coverage-status-image](https://code.usgs.gov/inl/inlpubs/badges/main/coverage.svg)](https://code.usgs.gov/inl/inlpubs/-/commits/main)
 
-Description
------------
+## Description
 
 The [R](https://www.r-project.org/) package **inlpubs** may be used to
 search and analyze the 385 publications that cover the 76-year history
@@ -26,8 +24,7 @@ used in titles and abstracts is shown below.
 
 ![](man/figures/wordcloud.png)
 
-Installation
-------------
+## Installation
 
 To install the current release of the package from
 [CRAN](https://CRAN.R-project.org/package=inlpubs), you can use the
@@ -50,8 +47,7 @@ remotes::install_gitlab(
 )
 ```
 
-Usage
------
+## Usage
 
 Examples are given in the package help pages. To access these documents,
 run:
@@ -61,34 +57,29 @@ library("inlpubs")
 help(package = "inlpubs")
 ```
 
-Authors
--------
+## Authors
 
--   Jason C. Fisher (ORCID iD
-    [0000-0001-9032-8912](https://orcid.org/0000-0001-9032-8912))
--   Kerri C. Treinen (ORCID iD
-    [0000-0003-0645-6810](https://orcid.org/0000-0003-0645-6810))
--   Allison R. Trcka (ORCID iD
-    [0000-0001-8498-4737](https://orcid.org/0000-0001-8498-4737))
+- Jason C. Fisher (ORCID iD
+  [0000-0001-9032-8912](https://orcid.org/0000-0001-9032-8912))
+- Kerri C. Treinen (ORCID iD
+  [0000-0003-0645-6810](https://orcid.org/0000-0003-0645-6810))
+- Allison R. Trcka (ORCID iD
+  [0000-0001-8498-4737](https://orcid.org/0000-0001-8498-4737))
 
-Point of Contact
-----------------
+## Point of Contact
 
-Jason C. Fisher
-(<a href="mailto:jfisher@usgs.gov" class="email">jfisher@usgs.gov</a>)
+Jason C. Fisher (<jfisher@usgs.gov>)
 
-Suggested Citation
-------------------
+## Suggested Citation
 
 To cite **inlpubs** in publications, please use:
 
 Fisher, J.C., 2022, inlpubs—Bibliographic information for the U.S.
 Geological Survey Idaho National Laboratory Project Office: U.S.
 Geological Survey software release, R package, Reston, Va.,
-<a href="https://doi.org/10.5066/P9I3GWWU" class="uri">https://doi.org/10.5066/P9I3GWWU</a>.
+<https://doi.org/10.5066/P9I3GWWU>.
 
-Contributing
-------------
+## Contributing
 
 We value your contributions and suggestions on how to make these
 materials more useful to the community. Please feel free to share your
@@ -97,8 +88,7 @@ tracker](https://code.usgs.gov/inl/inlpubs/-/issues) or opening a [merge
 request](https://code.usgs.gov/inl/inlpubs/-/merge_requests) to
 contribute.
 
-Code of Conduct
----------------
+## Code of Conduct
 
 All contributions to- and interactions surrounding- this project will
 abide by the [USGS Code of Scientific
@@ -106,8 +96,7 @@ Conduct](https://www.usgs.gov/office-of-science-quality-and-integrity/fundamenta
 
 <!-- Embedded References -->
 
-Disclaimer
-----------
+## Disclaimer
 
 This software is preliminary or provisional and is subject to revision.
 It is being provided to meet the need for timely best science. The
@@ -122,8 +111,7 @@ authorized or unauthorized use of the software.
 Any use of trade, product, or firm names is for descriptive purposes
 only and does not imply endorsement by the U.S. Government.
 
-License
--------
+## License
 
 Unless otherwise noted, this project is in the public domain in the
 United States because it contains materials that originally came from
@@ -164,8 +152,7 @@ the author or the affirmer.
 
 <!-- Embedded References -->
 
-Support
--------
+## Support
 
 The Idaho National Laboratory Project Office of the USGS supports the
 development and maintenance of **inlpubs**. Resources are available
@@ -173,8 +160,7 @@ primarily for maintenance and responding to user questions, and the
 development team determines the priorities for the development of new
 features.
 
-Additional Publication Details
-------------------------------
+## Additional Publication Details
 
 This table contains additional metadata about this publication that is
 not found in other parts of the page.
@@ -211,7 +197,7 @@ Year published
 Version
 </th>
 <td>
-1.0.0
+<a href='https://code.usgs.gov/inl/inlpubs/-/tree/v1.0.0'>1.0.0</a>
 </td>
 </tr>
 <tr>

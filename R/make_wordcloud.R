@@ -1,4 +1,4 @@
-#' Create Word Cloud from Frequency Table of Words
+#' Create Word Cloud
 #'
 #' @description Create a word cloud from a frequency table of words, and save to a PNG file.
 #'   Requires R-packages \pkg{htmltools}, \pkg{htmlwidgets}, \pkg{magick}, \pkg{webshot2},
@@ -11,11 +11,11 @@
 #'   Use [`find_chromate`][chromote::find_chrome] function to find the path to the Chrome browser.
 #'
 #' @param x 'data.frame'.
-#'   A frequency table of words that includes "word" and "freq" in each column.
-#' @param max_words 'integer' number.
-#'   Maximum number of words to include in the word cloud.
+#'   A frequency table of terms that includes "term" and "freq" in each column.
+#' @param max_terms 'integer' number.
+#'   Maximum number of terms to include in the word cloud.
 #' @param size 'numeric' number.
-#'   Font size, where the larger size indicates a bigger word.
+#'   Font size.
 #' @param shape 'character' string.
 #'   Shape of the \dQuote{cloud} to draw.
 #'   Possible shapes include a "circle", "cardioid", "diamond",
@@ -38,21 +38,24 @@
 #'
 #' @export
 #'
+#' @seealso [`mine_text`] function to perform a term frequency text analysis.
+#'
 #' @examples
 #' \dontrun{
-#'   file <- wordcloud2::demoFreq |>
-#'     make_wordcloud(size = 1.5, display = interactive())
+#'   d <- wordcloud2::demoFreq |> head(n = 10)
+#'   colnames(d) <- c("term", "freq")
+#'   file <- make_wordcloud(d, display = interactive())
 #'
 #'   unlink(file)
 #' }
 
 make_wordcloud <- function(x,
-                           max_words = 200L,
+                           max_terms = 200,
                            size = 1,
                            shape = "circle",
                            ellipticity = 0.65,
                            ...,
-                           width = 910L,
+                           width = 910,
                            output = NULL,
                            display = FALSE) {
 
@@ -78,8 +81,8 @@ make_wordcloud <- function(x,
     min.rows = 3,
     min.cols = 2
   )
-  checkmate::assert_names(colnames(x), must.include = c("word", "freq"))
-  checkmate::assert_count(max_words, positive = TRUE)
+  checkmate::assert_names(colnames(x), must.include = c("term", "freq"))
+  checkmate::assert_count(max_terms, positive = TRUE)
   checkmate::assert_number(size, lower = 0, finite = TRUE)
   shape <- match.arg(shape,
     choices = c(
@@ -104,8 +107,8 @@ make_wordcloud <- function(x,
   # sort data in decreasing frequency
   d <- x[order(x$freq, decreasing = TRUE), ]
 
-  # exclude words that are infrequently used
-  d <- utils::head(x, max_words)
+  # exclude terms that are infrequently used
+  d <- utils::head(x, n = max_terms)
 
   # create word cloud html widget
   wc <- wordcloud2::wordcloud2(d,

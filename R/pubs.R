@@ -20,6 +20,7 @@
 #'     \item{`annotation`}{Annotation of publication.}
 #'     \item{`annotation_src`}{Identifier for the annotation source publication
 #'       (Knobel and others, 2005; Bartholomay, 2022).}
+#'     \item{`files`}{File names associated with the publication.}
 #'   }
 #'
 #' @source Many of these publications are available through the

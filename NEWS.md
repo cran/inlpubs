@@ -1,3 +1,14 @@
+# inlpubs 1.1.3
+
+- Don't run the `extract_pdf_text` example.
+
+# inlpubs 1.1.2
+
+- Add `extract_pdf_image` function, used to extract an image (such as cover image) from a PDF document.
+- Add `extract_pdf_text` function, used to extract text from a PDF document.
+- Add `terms` dataset, a term-frequency data table.
+- Add `search_terms` function, used to search terms in the term-frequency data table.
+
 # inlpubs 1.1.1
 
 - Fix lost braces in `make_wordcloud` help documentation.

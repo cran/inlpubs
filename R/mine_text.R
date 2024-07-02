@@ -1,89 +1,81 @@
-#' Mine Text Components in the INLPO Publications
+#' Mine Text
 #'
-#' Performs a word frequency text analysis of Idaho National Laboratory Project Office
-#' ([INLPO](https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office))
-#' publications.
+#' @description Performs a term frequency text analysis.
+#'   A term is defined as a word or group of words.
 #'
-#' @param pubs 'pub' class.
-#'   Bibliographic information, see [`pubs`] dataset for details.
-#' @param components character vector.
-#'   One or more text components to analyze.
-#'   Choices include the "title", "abstract", "annotation", and "bibentry" of the document.
+#' @param docs 'list' or 'character' vector.
+#'   Document text to analyze.
+#'   Each list item contains the extracted text from a single document.
 #' @param ngmin,ngmax integer number.
 #'   Splits strings into *n-grams* with given minimal and maximal numbers of grams.
 #'   An n-gram is an ordered sequence of n words taken from the body of a text.
 #'   Requires the \pkg{RWeka} package is available and that the
 #'   environment variable JAVA_HOME points to where the Java software is located.
 #'   Recommended for single text compoents only.
-#' @param lowfreq integer number.
-#'   Lower frequency bound.
-#'   Words that occur less than this bound are excluded from the returned frequency table.
+#' @param sparse 'numeric' number that is greater than 0 and less than 1.
+#'   A threshold of relative document frequency for a term.
+#'   It specifies the proportion of documents in which a term must appear to be retained.
+#'   For example if you specify `sparse` equal to 0.99,
+#'   it removes terms that are more sparse than 0.99.
+#'   Conversely, at 0.01, only terms appearing in nearly every document will be retained.
 #'
 #' @details HTML entities are decoded when the \pkg{textutils} package is available.
 #'
-#' @return A word frequency table giving the number of times each word occurs in a publication's text component(s).
-#'   A table column represents a single publication that is identified using its bibentry-key.
-#'   And each row provides frequency counts for a particular word (also known as a 'term').
+#' @return A term-frequency data table giving the number of times each word occurs in the text.
+#'   A column in the table represents a single component in the `docs` argument,
+#'   and each row provides frequency counts for a particular word (also known as a 'term').
 #'
 #' @author J.C. Fisher, U.S. Geological Survey, Idaho Water Science Center
 #'
-#' @seealso
-#'   [`make_wordcloud`] function to create a word cloud.
+#' @seealso [`search_terms`] function to search for terms within the resulting term-frequency data table.
+#' @seealso [`make_wordcloud`] function to create a word cloud.
 #'
 #' @export
 #'
 #' @examples
-#' m <- head(pubs, 3) |> mine_text()
-#' head(m)
+#' d <- c(
+#'   "The quick brown fox jumps over the lazy lazy dog.",
+#'   "Pack my brown box.",
+#'   "Jazz fly brown dog."
+#' ) |>
+#'   mine_text()
 #'
-#' \dontrun{
-#'   d <- data.frame(word = rownames(m), freq = rowSums(m))
-#'   file <- make_wordcloud(d, display = interactive())
-#'   unlink(file)
-#' }
+#' d <- list(
+#'   "A" = "The quick brown fox jumps over the lazy lazy dog.",
+#'   "B" = c("Pack my brown box.", NA, "Jazz fly brown dog."),
+#'   "C" = NA_character_
+#' ) |>
+#'   mine_text()
 
-mine_text <- function(pubs,
-                      components = c("title", "abstract"),
-                      ngmin = 1L,
+mine_text <- function(docs,
+                      ngmin = 1,
                       ngmax = ngmin,
-                      lowfreq = 1L) {
+                      sparse = NULL) {
 
   # check arguments
-  checkmate::assert_class(pubs, classes = c("pub", "data.frame"))
-  choices <- c("title", "abstract", "annotation", "bibentry")
-  components <- match.arg(components, choices, several.ok = TRUE)
   checkmate::assert_count(ngmin, positive = TRUE)
   checkmate::assert_int(ngmax, lower = ngmin)
-  checkmate::assert_count(lowfreq, positive = TRUE)
+  checkmate::assert_number(sparse, lower = 0.001, upper = 0.999, null.ok = TRUE)
 
-  # extract text component(s)
-  texts <- apply(pubs,
-    MARGIN = 1,
-    FUN = function(x) {
-      txt <- character(0)
-      if ("title" %in% components) {
-        txt <- c(txt, x$bibentry$title)
-      }
-      if ("abstract" %in% components) {
-        txt <- c(txt, x$abstract)
-      }
-      if ("annotation" %in% components) {
-        txt <- c(txt, x$annotation)
-      }
-      if ("bibentry" %in% components) {
-        txt <- attr(unclass(x$bibentry)[[1]], which = "textVersion")
-      }
-      txt <- stats::na.omit(txt)
-      if (length(txt) == 0) {
-        return(NA_character_)
-      }
-      txt <- paste(txt, collapse = " ")
-      if (requireNamespace("textutils", quietly = TRUE)) {
-        txt <- textutils::HTMLdecode(txt)
-      }
-      txt
-    }
+  # assign names
+  if (is.null(names(docs))) {
+    names(docs) <- seq_along(docs) |> as.character()
+  }
+
+  # concatenate strings
+  docs <- vapply(docs,
+    FUN <- function(x) {
+      stats::na.omit(x) |>
+        as.character() |>
+        paste(collapse = " ")
+    },
+    FUN.VALUE = character(1)
   )
+
+  # decode HTML entities
+  if (requireNamespace("textutils", quietly = TRUE)) {
+    docs <- textutils::HTMLdecode(docs)
+  }
 
   # define transformation functions
   remove_url <- tm::content_transformer(
@@ -97,8 +89,9 @@ mine_text <- function(pubs,
     }
   )
 
-  # create volatile corpora
-  corpora <- tm::VCorpus(tm::VectorSource(texts)) |>
+  # create volatile corpus
+  corpus <- tm::VectorSource(docs) |>
+    tm::VCorpus() |>
     tm::tm_map(remove_url) |>
     tm::tm_map(remove_pat, "\\\\u[0-9A-Fa-f]{4}") |>
     tm::tm_map(remove_pat, "\\\\n") |>
@@ -114,12 +107,15 @@ mine_text <- function(pubs,
     tm::tm_map(tm::stripWhitespace)
 
   # identify with publication identifier
-  for (i in seq_along(corpora)) {
-    corpora[[i]]$meta$id <- pubs$pub_id[i]
+  for (i in seq_along(corpus)) {
+    corpus[[i]]$meta$id <- names(docs)[i]
   }
 
+  # initialize control options
+  control <- list()
+
   # define n-gram tokenizer
-  if (ngmin > 1L || ngmax > 1L) {
+  if (ngmax > 1L) {
     is <- Sys.getenv("JAVA_HOME") |> checkmate::test_directory_exists(access = "r")
     if (!is) {
       stop("JAVA_HOME cannot be determined from the Registry", call. = FALSE)
@@ -134,25 +130,44 @@ mine_text <- function(pubs,
         )
       }
     )
-  } else {
-    control <- list()
   }
 
-  # coerce corpora to a document-term matrix
-  dtm <- tm::TermDocumentMatrix(corpora, control = control)
+  # coerce corpus to term-document matrix
+  tdm <- tm::TermDocumentMatrix(corpus, control = control)
 
-  # find frequently occurring words
-  words <- tm::findFreqTerms(dtm, lowfreq = lowfreq)
-  if (!is.null(words)) {
-    dtm <- dtm[words, ]
+  # remove sparse terms
+  if (!is.null(sparse)) {
+    tdm <- tm::removeSparseTerms(tdm, sparse = sparse)
   }
 
-  # coerce document-term matrix to a frequency table
-  tbl <- as.matrix(dtm)
+  # convert to frequency table
+  d <- as.table(tdm) |>
+    as.data.frame(stringsAsFactors = TRUE)
 
-  # sort table in decreasing frequency
-  idxs <- rowSums(tbl) |> order(decreasing = TRUE)
-  tbl <- tbl[idxs, ]
+  # set column names
+  colnames(d) <- c("term", "pub_id", "freq")
 
-  tbl
+  # set frequency to integer class
+  d$freq <- as.integer(d$freq)
+
+  # remove rows with zero frequency
+  d <- d[d$freq > 0, ]
+
+  # remove rows with duplicate words in term
+  if (ngmax > 1) {
+    is <- as.character(d$term) |>
+      strsplit(split = " ") |>
+      vapply(FUN = anyDuplicated, FUN.VALUE = integer(1)) |>
+      as.logical()
+    d <- d[!is, ]
+  }
+
+  # sort rows
+  idxs <- order(d$term, d$freq, decreasing = c(FALSE, TRUE), method = "radix")
+  d <- d[idxs, ]
+
+  # clear row names
+  rownames(d) <- NULL
+
+  droplevels(d)
 }

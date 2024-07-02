@@ -2,29 +2,29 @@
 % Please edit documentation in R/make_wordcloud.R
 \name{make_wordcloud}
 \alias{make_wordcloud}
-\title{Create Word Cloud from Frequency Table of Words}
+\title{Create Word Cloud}
 \usage{
 make_wordcloud(
   x,
-  max_words = 200L,
+  max_terms = 200,
   size = 1,
   shape = "circle",
   ellipticity = 0.65,
   ...,
-  width = 910L,
+  width = 910,
   output = NULL,
   display = FALSE
 )
 }
 \arguments{
 \item{x}{'data.frame'.
-A frequency table of words that includes "word" and "freq" in each column.}
+A frequency table of terms that includes "term" and "freq" in each column.}
 
-\item{max_words}{'integer' number.
-Maximum number of words to include in the word cloud.}
+\item{max_terms}{'integer' number.
+Maximum number of terms to include in the word cloud.}
 
 \item{size}{'numeric' number.
-Font size, where the larger size indicates a bigger word.}
+Font size.}
 
 \item{shape}{'character' string.
 Shape of the \dQuote{cloud} to draw.
@@ -62,11 +62,15 @@ Use \code{\link[chromote:find_chrome]{find_chromate}} function to find the path 
 }
 \examples{
 \dontrun{
-  file <- wordcloud2::demoFreq |>
-    make_wordcloud(size = 1.5, display = interactive())
+  d <- wordcloud2::demoFreq |> head(n = 10)
+  colnames(d) <- c("term", "freq")
+  file <- make_wordcloud(d, display = interactive())
 
   unlink(file)
 }
+}
+\seealso{
+\code{\link{mine_text}} function to perform a term frequency text analysis.
 }
 \author{
 J.C. Fisher, U.S. Geological Survey, Idaho Water Science Center

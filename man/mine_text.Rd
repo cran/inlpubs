@@ -2,23 +2,14 @@
 % Please edit documentation in R/mine_text.R
 \name{mine_text}
 \alias{mine_text}
-\title{Mine Text Components in the INLPO Publications}
+\title{Mine Text}
 \usage{
-mine_text(
-  pubs,
-  components = c("title", "abstract"),
-  ngmin = 1L,
-  ngmax = ngmin,
-  lowfreq = 1L
-)
+mine_text(docs, ngmin = 1, ngmax = ngmin, sparse = NULL)
 }
 \arguments{
-\item{pubs}{'pub' class.
-Bibliographic information, see \code{\link{pubs}} dataset for details.}
-
-\item{components}{character vector.
-One or more text components to analyze.
-Choices include the "title", "abstract", "annotation", and "bibentry" of the document.}
+\item{docs}{'list' or 'character' vector.
+Document text to analyze.
+Each list item contains the extracted text from a single document.}
 
 \item{ngmin, ngmax}{integer number.
 Splits strings into \emph{n-grams} with given minimal and maximal numbers of grams.
@@ -27,34 +18,43 @@ Requires the \pkg{RWeka} package is available and that the
 environment variable JAVA_HOME points to where the Java software is located.
 Recommended for single text compoents only.}
 
-\item{lowfreq}{integer number.
-Lower frequency bound.
-Words that occur less than this bound are excluded from the returned frequency table.}
+\item{sparse}{'numeric' number that is greater than 0 and less than 1.
+A threshold of relative document frequency for a term.
+It specifies the proportion of documents in which a term must appear to be retained.
+For example if you specify \code{sparse} equal to 0.99,
+it removes terms that are more sparse than 0.99.
+Conversely, at 0.01, only terms appearing in nearly every document will be retained.}
 }
 \value{
-A word frequency table giving the number of times each word occurs in a publication's text component(s).
-A table column represents a single publication that is identified using its bibentry-key.
-And each row provides frequency counts for a particular word (also known as a 'term').
+A term-frequency data table giving the number of times each word occurs in the text.
+A column in the table represents a single component in the \code{docs} argument,
+and each row provides frequency counts for a particular word (also known as a 'term').
 }
 \description{
-Performs a word frequency text analysis of Idaho National Laboratory Project Office
-(\href{https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office}{INLPO})
-publications.
+Performs a term frequency text analysis.
+A term is defined as a word or group of words.
 }
 \details{
 HTML entities are decoded when the \pkg{textutils} package is available.
 }
 \examples{
-m <- head(pubs, 3) |> mine_text()
-head(m)
+d <- c(
+  "The quick brown fox jumps over the lazy lazy dog.",
+  "Pack my brown box.",
+  "Jazz fly brown dog."
+) |>
+  mine_text()
 
-\dontrun{
-  d <- data.frame(word = rownames(m), freq = rowSums(m))
-  file <- make_wordcloud(d, display = interactive())
-  unlink(file)
-}
+d <- list(
+  "A" = "The quick brown fox jumps over the lazy lazy dog.",
+  "B" = c("Pack my brown box.", NA, "Jazz fly brown dog."),
+  "C" = NA_character_
+) |>
+  mine_text()
 }
 \seealso{
+\code{\link{search_terms}} function to search for terms within the resulting term-frequency data table.
+
 \code{\link{make_wordcloud}} function to create a word cloud.
 }
 \author{

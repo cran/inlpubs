@@ -21,6 +21,7 @@ referes to the primry key of the \code{\link{authors}} data table.}
 \item{\code{annotation}}{Annotation of publication.}
 \item{\code{annotation_src}}{Identifier for the annotation source publication
 (Knobel and others, 2005; Bartholomay, 2022).}
+\item{\code{files}}{File names associated with the publication.}
 }
 }
 \source{
