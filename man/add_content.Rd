@@ -25,11 +25,11 @@ May also be specified using the \code{year} of publication.}
 Year of publication.}
 
 \item{type}{'character' string.
-Type of content to extract from the PDF file.
+Type of content to obtain from the PDF file.
 Specify as either "text" (the default) or "image".}
 
-\item{...}{Arguments to be passed to the extraction function,
-\code{\link{extract_pdf_text}} for "text" and \code{\link{extract_pdf_image}} for "image".}
+\item{...}{Arguments to be passed to the function used to obtain the context,
+\code{\link{get_pdf_text}} for "text" and \code{\link{get_pdf_image}} for "image".}
 
 \item{srcdir}{'character' string.
 The PDF document is located in a subdirectory of the source directory,

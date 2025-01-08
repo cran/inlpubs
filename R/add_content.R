@@ -8,11 +8,11 @@
 #' @param year 'integer' vector.
 #'   Year of publication.
 #' @param type 'character' string.
-#'   Type of content to extract from the PDF file.
+#'   Type of content to obtain from the PDF file.
 #'   Specify as either "text" (the default) or "image".
 #' @param ...
-#'   Arguments to be passed to the extraction function,
-#'   [`extract_pdf_text`] for "text" and [`extract_pdf_image`] for "image".
+#'   Arguments to be passed to the function used to obtain the context,
+#'   [`get_pdf_text`] for "text" and [`get_pdf_image`] for "image".
 #' @param srcdir 'character' string.
 #'   The PDF document is located in a subdirectory of the source directory,
 #'   and this subdirectory is named after the publication year.
@@ -67,10 +67,7 @@ add_content <- function(pub_id,
   checkmate::assert_flag(overwrite)
 
   # set extraction method
-  extract <- switch(type,
-    "text" = extract_pdf_text,
-    "image" = extract_pdf_image
-  )
+  extract <- switch(type, "text" = get_pdf_text, "image" = get_pdf_image)
 
   # ignore publication identifiers
   is <- pub_id %in% ignore

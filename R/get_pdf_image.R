@@ -1,6 +1,6 @@
-#' Extract Image from a PDF Document
+#' Obtain Image from a PDF Document
 #'
-#' @description Extract an image from any PDF document.
+#' @description Obtain an image from any PDF document.
 #'   Requires that the \pkg{pdftools} and \pkg{magick} packages are available.
 #'
 #' @param input 'character' string.
@@ -29,16 +29,16 @@
 #'
 #' @examples
 #' input <- system.file("extdata", "test.pdf", package = "inlpubs")
-#' path <- extract_pdf_image(input)
+#' path <- get_pdf_image(input)
 #'
 #' unlink(path)
 
-extract_pdf_image <- function(input,
-                              output = tempfile(fileext = ".jpg"),
-                              page = 1,
-                              width = 300,
-                              depth = 8,
-                              quality = 70) {
+get_pdf_image <- function(input,
+                          output = tempfile(fileext = ".jpg"),
+                          page = 1,
+                          width = 300,
+                          depth = 8,
+                          quality = 70) {
 
   # check system dependencies
   if (!requireNamespace("pdftools", quietly = TRUE)) {

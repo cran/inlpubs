@@ -13,7 +13,7 @@
 #'     \item{`freq`}{Frequency count from text analysis.}
 #'   }
 #'
-#' @source The publication text was sourced from the original PDF documents using the [`extract_pdf_text`] function,
+#' @source The publication text was sourced from the original PDF documents using the [`get_pdf_text`] function,
 #'   and term frequencies were extracted from the text using the [`mine_text`] function.
 #'
 #' @keywords datasets

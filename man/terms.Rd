@@ -16,7 +16,7 @@ referes to the primry key of the \code{\link{pubs}} data table.}
 }
 }
 \source{
-The publication text was sourced from the original PDF documents using the \code{\link{extract_pdf_text}} function,
+The publication text was sourced from the original PDF documents using the \code{\link{get_pdf_text}} function,
 and term frequencies were extracted from the text using the \code{\link{mine_text}} function.
 }
 \usage{

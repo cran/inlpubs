@@ -1,3 +1,8 @@
+# inlpubs 1.2.0
+
+- Integrate the remaining publications for 2024.
+- Rename `extract_pdf_*` functions to `get_pdf_*`.
+
 # inlpubs 1.1.3
 
 - Don't run the `extract_pdf_text` example.

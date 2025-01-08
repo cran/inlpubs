@@ -6,23 +6,35 @@
 
 ## Description
 
-The [R](https://www.r-project.org/) package **inlpubs** may be used to
-search and analyze the 385 publications that cover the 76-year history
-of the U.S. Geological Survey ([USGS](https://www.usgs.gov/)), Idaho
-Water Science Center, Idaho National Laboratory Project Office
+The **inlpubs** [R](https://www.r-project.org/) package enables users to
+search and analyze 390 publications spanning the 76-year history of the
+U.S. Geological Survey (USGS) Idaho Water Science Center and the Idaho
+National Laboratory Project Office
 ([INLPO](https://www.usgs.gov/centers/idaho-water-science-center/science/idaho-national-laboratory-project-office)).
-The INLPO publications were authored by 263 researchers trying to better
-understand the effects of waste disposal on water contained in the
-eastern Snake River Plain aquifer and the availability of water for
-long-term consumptive and industrial use. Information contained within
-these publications is crucial to the management and use of the aquifer
-by the Idaho National Laboratory ([INL](https://inl.gov/)) and the State
-of Idaho. USGS geohydrologic studies and monitoring, which began in
-1920, were done in cooperation with the U.S. Department of Energy Idaho
-Operations Office. A word cloud highlighting the 200 most popular words
-used in titles and abstracts is shown below.
+Authored by 266 researchers, these publications provide valuable
+insights into the impacts of waste disposal on the eastern Snake River
+Plain aquifer and the availability of water for long-term consumptive
+and industrial use. The information within these publications is
+critical for the management and utilization of the aquifer by the Idaho
+National Laboratory ([INL](https://inl.gov/)) and the State of Idaho.
+USGS geohydrologic studies and monitoring, initiated in 1920, were
+conducted in cooperation with the U.S. Department of Energy Idaho
+Operations Office.
 
-![](man/figures/wordcloud.png)
+<p>
+
+<figure class="figure">
+
+<img src="man/figures/wordcloud.png" class="figure-img img-fluid" alt="photo" width="860px" />
+<figcaption class="figure-caption">
+
+A word cloud showcasing the 200 most frequently used words in titles and
+abstracts.
+</figcaption>
+
+</figure>
+
+</p>
 
 ## Installation
 
@@ -34,14 +46,21 @@ following command in R:
 install.packages("inlpubs")
 ```
 
-To install the development version of the package, you need to clone the
-repository and build from source, or run the following commands:
+To install the package along with its dependencies, which are required
+to run examples in the package help documentation and build package
+datasets, run:
 
 ``` r
-if (!requireNamespace("remotes")) install.packages("remotes")
+install.packages("inlpubs", dependencies = TRUE)
+```
+
+To install the development version of the package, you can either clone
+the repository and build it from source, or run the following commands.
+Make sure the **remotes** package for R is installed.
+
+``` r
 remotes::install_gitlab(
   repo = "inl/inlpubs@develop",
-  auth_token = Sys.getenv("GITLAB_PAT"),
   host = "code.usgs.gov",
   dependencies = TRUE
 )
@@ -55,6 +74,15 @@ run:
 ``` r
 library("inlpubs")
 help(package = "inlpubs")
+```
+
+## Test
+
+The **tinytest** package is used for unit testing. To run the tests, use
+the following command:
+
+``` r
+tinytest::test_package("inlpubs")
 ```
 
 ## Authors
@@ -162,53 +190,87 @@ features.
 
 ## Additional Publication Details
 
-This table contains additional metadata about this publication that is
-not found in other parts of the page.
+Additional metadata about this publication, not found in other parts of
+the page is in this table.
 
 <!--html_preserve-->
+
 <table>
+
 <tbody>
+
 <tr>
+
 <th scope="row">
+
 Publication type
 </th>
+
 <td>
+
 Formal R language package
 </td>
+
 </tr>
+
 <tr>
+
 <th scope="row">
+
 DOI
 </th>
+
 <td>
+
 10.5066/P9I3GWWU
 </td>
+
 </tr>
+
 <tr>
+
 <th scope="row">
+
 Year published
 </th>
+
 <td>
+
 2022
 </td>
+
 </tr>
+
 <tr>
+
 <th scope="row">
+
 Version
 </th>
+
 <td>
+
 <a href='https://code.usgs.gov/inl/inlpubs/-/tree/v1.0.0'>1.0.0</a>
 </td>
+
 </tr>
+
 <tr>
+
 <th scope="row">
+
 IPDS
 </th>
+
 <td>
+
 IP-130851
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 <cr><!--/html_preserve-->

@@ -1,6 +1,6 @@
-#' Extract Text from a PDF Document
+#' Obtain Text from a PDF Document
 #'
-#' @description Extract text from any PDF document.
+#' @description Obtain text from any PDF document.
 #'   Requires that the \pkg{pdftools} and \pkg{tesseract} packages are available.
 #'
 #' @param input 'character' string.
@@ -30,15 +30,15 @@
 #' @examples
 #' \dontrun{
 #'   input <- system.file("extdata", "test.pdf", package = "inlpubs")
-#'   path <- extract_pdf_text(input)
+#'   path <- get_pdf_text(input)
 #'
 #'   unlink(path)
 #' }
 
-extract_pdf_text <- function(input,
-                             output = tempfile(fileext = ".txt"),
-                             dpi = 600,
-                             psm = 1) {
+get_pdf_text <- function(input,
+                         output = tempfile(fileext = ".txt"),
+                         dpi = 600,
+                         psm = 1) {
 
   # check arguments
   input <- path.expand(input) |> normalizePath(winslash = "/", mustWork = FALSE)
